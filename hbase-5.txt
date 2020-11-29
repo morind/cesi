@@ -1,0 +1,12 @@
+scan bibliotheque
+scan bibliotheque, {COLUMNS=>['livre']}
+scan bibliotheque, {COLUMNS=>['livre:date']}
+
+Scans avancés :
+
+scan bibliotheque, { STARTROW=>'a', STOPROW=>'n', COLUMNS=>'auteur'}
+scan bibliotheque, {FILTER=>"RowFilter(>=, 'binary:a') AND RowFilter(<, 'binary:n') AND FamilyFilter (=, 'binary:auteur')"}
+scan bibliotheque, {FILTER=>"FamilyFilter (=, 'binary:auteur') AND QualifierFilter (=, 'binary:prenom')"}
+scan bibliotheque, {FILTER=>"SingleColumnValueFilter('livre', 'titre', =, 'binary:Face au drapeau')"}
+scan bibliotheque, {FILTER=>"SingleColumnValueFilter('livre', 'date', <=, 'binary:1890')"}
+scan bibliotheque, {FILTER=>"PrefixFilter('jv') AND ValueFilter(=,'regexstring:[A-Z]([a-z]+ ){2,}')"}

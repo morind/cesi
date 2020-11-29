@@ -1,0 +1,5 @@
+deleteall bibliotheque, 'vhugo', 'auteur:nom', /*TIMESTAMP*/
+deleteall bibliotheque, 'vhugo', 'auteur:prenom'
+deleteall bibliotheque, 'jverne'
+
+scan bibliotheque, {VERSIONS=>10}
