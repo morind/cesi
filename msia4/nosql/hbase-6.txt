@@ -1,0 +1,8 @@
+put bibliotheque, 'vhugo', 'auteur:nom', 'HAGO'
+put bibliotheque, 'vhugo', 'auteur:nom', 'HUGO'
+put bibliotheque, 'vhugo', 'auteur:prenom', 'Victor Marie'
+put bibliotheque, 'vhugo', 'auteur:nom', 'Hugo'
+
+get bibliotheque, 'vhugo', 'auteur'
+get bibliotheque, 'vhugo', {COLUMNS=>'auteur'}
+get bibliotheque, 'vhugo', {COLUMNS=>'auteur', VERSIONS=>10}
