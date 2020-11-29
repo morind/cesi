@@ -1,7 +1,0 @@
-get bibliotheque, 'vhugo'
-get bibliotheque, 'vhugo', 'auteur'
-get bibliotheque, 'vhugo', 'auteur:prenom'
-get bibliotheque, 'jverne', {COLUMN=>'livre'}
-get bibliotheque, 'jverne', {COLUMN=>'livre:titre'}
-get bibliotheque, 'jverne', {COLUMN=>['livre:titre', 'livre:date', 'livre:editeur']}
-get bibliotheque, 'jverne', {FILTER=>"ValueFilter(=, 'binary:Jules')"}
