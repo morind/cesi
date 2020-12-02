@@ -1,4 +1,4 @@
-# ElasticSearch ressources pour l'IUT
+# ElasticSearch ressources
 
 Commencez par cloner ou telecharger ce repository. Puis démarrer ElasticSearch
 
