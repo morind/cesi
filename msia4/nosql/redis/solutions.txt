@@ -1,0 +1,188 @@
+redis 127.0.0.1:6379> set Webuser:1 Nicolas
+OK
+redis 127.0.0.1:6379> set Webuser:2 Paul
+OK
+redis 127.0.0.1:6379> set Webuser:3 Pierre
+OK
+
+Récupérer la liste des clés commençant par Web
+
+redis 127.0.0.1:6379> KEYS Web*
+1) "Webuser:2"
+2) "Webuser:3"
+3) "Webuser:1"
+redis 127.0.0.1:6379>
+
+############################################################
+Définir la clé Webuser:Tmp avec comme valeur TempVisitor expirant après 10 minutes
+
+redis 127.0.0.1:6379> setex Webuser:Tmp 600 TempVisitor
+OK
+
+Checker le TTL au fur et à mesure
+
+redis 127.0.0.1:6379> ttl Webuser:Tmp
+(integer) 594
+redis 127.0.0.1:6379> ttl Webuser:Tmp
+(integer) 593
+
+
+############################################################
+Ajouter 5 visiteurs à la liste LastWebVisitors : Webuser:1, Webuser:2, Webuser:tmp, Webuser:3, Webuser:4, Webuser:3, Webuser:5, Webuser:6, Webuser:7, Webuser:8
+
+LPUSH LastWebVisitors Webuser:1
+LPUSH LastWebVisitors Webuser:2
+LPUSH LastWebVisitors Webuser:tmp
+LPUSH LastWebVisitors Webuser:3
+LPUSH LastWebVisitors Webuser:4
+LPUSH LastWebVisitors Webuser:3
+LPUSH LastWebVisitors Webuser:5
+LPUSH LastWebVisitors Webuser:6
+LPUSH LastWebVisitors Webuser:7
+LPUSH LastWebVisitors Webuser:8
+
+
+
+Afficher la liste complète
+
+127.0.0.1:6379> LRANGE LastWebVisitors 0 -1
+ 1) "Webuser:8"
+ 2) "Webuser:7"
+ 3) "Webuser:6"
+ 4) "Webuser:5"
+ 5) "Webuser:3"
+ 6) "Webuser:4"
+ 7) "Webuser:3"
+ 8) "Webuser:tmp"
+ 9) "Webuser:2"
+10) "Webuser:1"
+
+Couper la liste pour ne garder que les 5 visiteurs les plus récents
+LTRIM LastWebVisitors 0 4
+
+LRANGE LastWebVisitors 0 -1
+1) "Webuser:8"
+2) "Webuser:7"
+3) "Webuser:6"
+4) "Webuser:5"
+5) "Webuser:3"
+
+############################################################
+
+Définir un SET avec les utilisateurs contenant un email Gmail
+
+SADD Webuser:HasGMail Webuser:3
+SADD Webuser:HasGMail Webuser:2
+SADD Webuser:HasGMail Webuser:5
+
+Afficher les membres du SET Webuser:HasGMail
+
+SMEMBERS Webuser:HasGMail
+1) "Webuser:5"
+2) "Webuser:3"
+3) "Webuser:2"
+
+Définir un SET pour les utilisateurs qui sont français 
+
+SADD Webuser:IsFrench Webuser:5
+SADD Webuser:IsFrench Webuser:7
+SADD Webuser:IsFrench Webuser:9
+SADD Webuser:IsFrench Webuser:2
+
+
+Afficher les membres du SET Webuser:IsFrench 
+
+SMEMBERS Webuser:IsFrench
+1) "Webuser:9"
+2) "Webuser:7"
+3) "Webuser:5"
+4) "Webuser:2"
+
+A l’aide des opérations sur les SETs, afficher les utilisateurs français avec Gmail
+
+ SINTER Webuser:IsFrench Webuser:HasGMail
+1) "Webuser:5"
+2) "Webuser:2"
+
+Afficher la différence entre les SETs Webuser:HasGMail et Webuser:IsFrench
+ SDIFF Webuser:IsFrench Webuser:HasGMail
+1) "Webuser:7"
+2) "Webuser:9"
+
+Stocker le résultat dans un SET Webuser:FrenchWithGMail
+
+ SINTERSTORE Webuser:FrenchWithGMail Webuser:IsFrench Webuser:HasGMail
+(integer) 2
+
+
+127.0.0.1:6379> SMEMBERS Webuser:FrenchWithGMail
+1) "Webuser:5"
+2) "Webuser:2"
+
+############################################################
+
+Dans le hash Webuser:Nicolas y mettre les clés/valeurs suivantes : email=toto[AT]zaptravel.com, lastName=Dupond, firstName=Nicolas
+
+redis 127.0.0.1:6379> HSET Webuser:Nicolas email toto[AT]zaptravel.com
+(integer) 1
+redis 127.0.0.1:6379> HSET Webuser:Nicolas lastName Dupond
+(integer) 1
+redis 127.0.0.1:6379> HSET Webuser:Nicolas firstName Nicolas
+(integer) 1
+
+Afficher le contenu du Hash
+
+redis 127.0.0.1:6379> HGETALL Webuser:Nicolas
+1) "email"
+2) "toto[AT]zaptravel.com"
+3) "lastName"
+4) "Dupond"
+5) "firstName"
+6) "Nicolas"
+
+Récupérer le firstname
+
+redis 127.0.0.1:6379> HGET Webuser:Nicolas firstName
+"Nicolas"
+
+############################################################
+
+Cas d’usage : classer par prix des voyages. Voici une liste de voyages à renseigner avec le prix en euros 
+
+ZADD DealsFranceByPrice 59 Trip:Lyon
+(integer) 1
+ZADD DealsFranceByPrice 259 Trip:Venise
+(integer) 1
+ZADD DealsFranceByPrice 130 Trip:Bordeaux
+(integer) 1
+ZADD DealsFranceByPrice 990 Trip:Paris
+(integer) 1
+
+Quel est le voyage le moins cher dans cette collection ?
+
+ZRANGE DealsFranceByPrice 0 0
+1) "Trip:Lyon"
+
+Quel est le voyage le plus cher dans cette collection et afficher le prix stocké
+
+ZREVRANGE DealsFranceByPrice 0 0 WITHSCORES
+1) "Trip:Paris"
+2) "990"
+
+############################################################
+
+Quels sont les voyages dont le prix est inférieur à 200 EUR, du voyage le plus cher au moins cher ?
+
+ZREVRANGEBYSCORE DealsFranceByPrice 200 0 WITHSCORES
+1) "Trip:Bordeaux"
+2) "130"
+3) "Trip:Lyon"
+4) "59"
+
+Comment retrouver uniquement les 10 voyages les moins chers en dessous de 200 EUR, par ordre de prix croissant ?
+
+ZRANGEBYSCORE DealsFranceByPrice 0 200 WITHSCORES LIMIT 0 10
+1) "Trip:Lyon"
+2) "59"
+3) "Trip:Bordeaux"
+4) "130"
