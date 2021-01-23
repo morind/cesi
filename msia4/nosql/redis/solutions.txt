@@ -28,7 +28,7 @@ redis 127.0.0.1:6379> ttl Webuser:Tmp
 
 
 ############################################################
-Ajouter 5 visiteurs à la liste LastWebVisitors : Webuser:1, Webuser:2, Webuser:tmp, Webuser:3, Webuser:4, Webuser:3, Webuser:5, Webuser:6, Webuser:7, Webuser:8
+Ajouter 10 visiteurs à la liste LastWebVisitors : Webuser:1, Webuser:2, Webuser:tmp, Webuser:3, Webuser:4, Webuser:3, Webuser:5, Webuser:6, Webuser:7, Webuser:8
 
 LPUSH LastWebVisitors Webuser:1
 LPUSH LastWebVisitors Webuser:2
