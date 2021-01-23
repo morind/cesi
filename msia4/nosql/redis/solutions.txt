@@ -1,138 +1,138 @@
-redis 127.0.0.1:6379> set Webuser:1 Nicolas
+redis 127.0.0.1:6379> set Devuser:1 Nicolas
 OK
-redis 127.0.0.1:6379> set Webuser:2 Paul
+redis 127.0.0.1:6379> set Devuser:2 Paul
 OK
-redis 127.0.0.1:6379> set Webuser:3 Pierre
+redis 127.0.0.1:6379> set Devuser:3 Pierre
 OK
 
-Récupérer la liste des clés commençant par Web
+Récupérer la liste des clés commençant par Dev
 
-redis 127.0.0.1:6379> KEYS Web*
-1) "Webuser:2"
-2) "Webuser:3"
-3) "Webuser:1"
+redis 127.0.0.1:6379> KEYS Dev*
+1) "Devuser:2"
+2) "Devuser:3"
+3) "Devuser:1"
 redis 127.0.0.1:6379>
 
 ############################################################
-Définir la clé Webuser:Tmp avec comme valeur TempVisitor expirant après 10 minutes
+Définir la clé Devuser:Tmp avec comme valeur TempVisitor expirant après 10 minutes
 
-redis 127.0.0.1:6379> setex Webuser:Tmp 600 TempVisitor
+redis 127.0.0.1:6379> setex Devuser:Tmp 600 TempVisitor
 OK
 
 Checker le TTL au fur et à mesure
 
-redis 127.0.0.1:6379> ttl Webuser:Tmp
+redis 127.0.0.1:6379> ttl Devuser:Tmp
 (integer) 594
-redis 127.0.0.1:6379> ttl Webuser:Tmp
+redis 127.0.0.1:6379> ttl Devuser:Tmp
 (integer) 593
 
 
 ############################################################
-Ajouter 10 visiteurs à la liste LastWebVisitors : Webuser:1, Webuser:2, Webuser:tmp, Webuser:3, Webuser:4, Webuser:3, Webuser:5, Webuser:6, Webuser:7, Webuser:8
+Ajouter 10 visiteurs à la liste LastVisitors : Devuser:1, Devuser:2, Devuser:tmp, Devuser:3, Devuser:4, Devuser:3, Devuser:5, Devuser:6, Devuser:7, Devuser:8
 
-LPUSH LastWebVisitors Webuser:1
-LPUSH LastWebVisitors Webuser:2
-LPUSH LastWebVisitors Webuser:tmp
-LPUSH LastWebVisitors Webuser:3
-LPUSH LastWebVisitors Webuser:4
-LPUSH LastWebVisitors Webuser:3
-LPUSH LastWebVisitors Webuser:5
-LPUSH LastWebVisitors Webuser:6
-LPUSH LastWebVisitors Webuser:7
-LPUSH LastWebVisitors Webuser:8
+LPUSH LastVisitors Devuser:1
+LPUSH LastVisitors Devuser:2
+LPUSH LastVisitors Devuser:tmp
+LPUSH LastVisitors Devuser:3
+LPUSH LastVisitors Devuser:4
+LPUSH LastVisitors Devuser:3
+LPUSH LastVisitors Devuser:5
+LPUSH LastVisitors Devuser:6
+LPUSH LastVisitors Devuser:7
+LPUSH LastVisitors Devuser:8
 
 
 
 Afficher la liste complète
 
-127.0.0.1:6379> LRANGE LastWebVisitors 0 -1
- 1) "Webuser:8"
- 2) "Webuser:7"
- 3) "Webuser:6"
- 4) "Webuser:5"
- 5) "Webuser:3"
- 6) "Webuser:4"
- 7) "Webuser:3"
- 8) "Webuser:tmp"
- 9) "Webuser:2"
-10) "Webuser:1"
+127.0.0.1:6379> LRANGE LastVisitors 0 -1
+ 1) "Devuser:8"
+ 2) "Devuser:7"
+ 3) "Devuser:6"
+ 4) "Devuser:5"
+ 5) "Devuser:3"
+ 6) "Devuser:4"
+ 7) "Devuser:3"
+ 8) "Devuser:tmp"
+ 9) "Devuser:2"
+10) "Devuser:1"
 
 Couper la liste pour ne garder que les 5 visiteurs les plus récents
-LTRIM LastWebVisitors 0 4
+LTRIM LastVisitors 0 4
 
-LRANGE LastWebVisitors 0 -1
-1) "Webuser:8"
-2) "Webuser:7"
-3) "Webuser:6"
-4) "Webuser:5"
-5) "Webuser:3"
+LRANGE LastVisitors 0 -1
+1) "Devuser:8"
+2) "Devuser:7"
+3) "Devuser:6"
+4) "Devuser:5"
+5) "Devuser:3"
 
 ############################################################
 
 Définir un SET avec les utilisateurs contenant un email Gmail
 
-SADD Webuser:HasGMail Webuser:3
-SADD Webuser:HasGMail Webuser:2
-SADD Webuser:HasGMail Webuser:5
+SADD Devuser:HasGMail Devuser:3
+SADD Devuser:HasGMail Devuser:2
+SADD Devuser:HasGMail Devuser:5
 
-Afficher les membres du SET Webuser:HasGMail
+Afficher les membres du SET Devuser:HasGMail
 
-SMEMBERS Webuser:HasGMail
-1) "Webuser:5"
-2) "Webuser:3"
-3) "Webuser:2"
+SMEMBERS Devuser:HasGMail
+1) "Devuser:5"
+2) "Devuser:3"
+3) "Devuser:2"
 
 Définir un SET pour les utilisateurs qui sont français 
 
-SADD Webuser:IsFrench Webuser:5
-SADD Webuser:IsFrench Webuser:7
-SADD Webuser:IsFrench Webuser:9
-SADD Webuser:IsFrench Webuser:2
+SADD Devuser:IsFrench Devuser:5
+SADD Devuser:IsFrench Devuser:7
+SADD Devuser:IsFrench Devuser:9
+SADD Devuser:IsFrench Devuser:2
 
 
-Afficher les membres du SET Webuser:IsFrench 
+Afficher les membres du SET Devuser:IsFrench 
 
-SMEMBERS Webuser:IsFrench
-1) "Webuser:9"
-2) "Webuser:7"
-3) "Webuser:5"
-4) "Webuser:2"
+SMEMBERS Devuser:IsFrench
+1) "Devuser:9"
+2) "Devuser:7"
+3) "Devuser:5"
+4) "Devuser:2"
 
 A l’aide des opérations sur les SETs, afficher les utilisateurs français avec Gmail
 
- SINTER Webuser:IsFrench Webuser:HasGMail
-1) "Webuser:5"
-2) "Webuser:2"
+ SINTER Devuser:IsFrench Devuser:HasGMail
+1) "Devuser:5"
+2) "Devuser:2"
 
-Afficher la différence entre les SETs Webuser:HasGMail et Webuser:IsFrench
- SDIFF Webuser:IsFrench Webuser:HasGMail
-1) "Webuser:7"
-2) "Webuser:9"
+Afficher la différence entre les SETs Devuser:HasGMail et Devuser:IsFrench
+ SDIFF Devuser:IsFrench Devuser:HasGMail
+1) "Devuser:7"
+2) "Devuser:9"
 
-Stocker le résultat dans un SET Webuser:FrenchWithGMail
+Stocker le résultat dans un SET Devuser:FrenchWithGMail
 
- SINTERSTORE Webuser:FrenchWithGMail Webuser:IsFrench Webuser:HasGMail
+ SINTERSTORE Devuser:FrenchWithGMail Devuser:IsFrench Devuser:HasGMail
 (integer) 2
 
 
-127.0.0.1:6379> SMEMBERS Webuser:FrenchWithGMail
-1) "Webuser:5"
-2) "Webuser:2"
+127.0.0.1:6379> SMEMBERS Devuser:FrenchWithGMail
+1) "Devuser:5"
+2) "Devuser:2"
 
 ############################################################
 
-Dans le hash Webuser:Nicolas y mettre les clés/valeurs suivantes : email=toto[AT]zaptravel.com, lastName=Dupond, firstName=Nicolas
+Dans le hash Devuser:Nicolas y mettre les clés/valeurs suivantes : email=toto[AT]zaptravel.com, lastName=Dupond, firstName=Nicolas
 
-redis 127.0.0.1:6379> HSET Webuser:Nicolas email toto[AT]zaptravel.com
+redis 127.0.0.1:6379> HSET Devuser:Nicolas email toto[AT]zaptravel.com
 (integer) 1
-redis 127.0.0.1:6379> HSET Webuser:Nicolas lastName Dupond
+redis 127.0.0.1:6379> HSET Devuser:Nicolas lastName Dupond
 (integer) 1
-redis 127.0.0.1:6379> HSET Webuser:Nicolas firstName Nicolas
+redis 127.0.0.1:6379> HSET Devuser:Nicolas firstName Nicolas
 (integer) 1
 
 Afficher le contenu du Hash
 
-redis 127.0.0.1:6379> HGETALL Webuser:Nicolas
+redis 127.0.0.1:6379> HGETALL Devuser:Nicolas
 1) "email"
 2) "toto[AT]zaptravel.com"
 3) "lastName"
@@ -142,7 +142,7 @@ redis 127.0.0.1:6379> HGETALL Webuser:Nicolas
 
 Récupérer le firstname
 
-redis 127.0.0.1:6379> HGET Webuser:Nicolas firstName
+redis 127.0.0.1:6379> HGET Devuser:Nicolas firstName
 "Nicolas"
 
 ############################################################
