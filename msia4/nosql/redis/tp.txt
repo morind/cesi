@@ -1,0 +1,72 @@
+############################################################
+# SET
+############################################################
+Devuser:1 Nicolas
+Devuser:2 Paul
+Devuser:3 Pierre
+
+Récupérer la liste des clés commençant par Dev
+
+
+############################################################
+Définir la clé Devuser:Tmp avec comme valeur TempVisitor expirant après 10 minutes
+
+Checker le TTL au fur et à mesure
+
+############################################################
+Ajouter 10 visiteurs à la liste LastVisitors : Devuser:1, Devuser:2, Devuser:tmp, Devuser:3, Devuser:4, Devuser:3, Devuser:5, Devuser:6, Devuser:7, Devuser:8
+
+Afficher la liste complète
+
+Couper la liste pour ne garder que les 5 visiteurs les plus récents (vérifier en affichant la liste complète)
+
+############################################################
+
+Définir un SET avec les utilisateurs contenant un email Gmail
+Membres de Devuser:HasGMail : Devuser:3 Devuser:2 Devuser:5
+
+Afficher les membres du SET Devuser:HasGMail
+
+Définir un SET pour les utilisateurs qui sont français 
+Membres de Devuser:IsFrench : Devuser:5 Devuser:7 Devuser:9 Devuser:2
+
+Afficher les membres du SET Devuser:IsFrench 
+
+A l’aide des opérations sur les SETs, afficher les utilisateurs français avec Gmail
+
+Afficher la différence entre les SETs Devuser:HasGMail et Devuser:IsFrench
+
+Stocker le résultat dans un SET Devuser:FrenchWithGMail
+
+############################################################
+
+Dans le hash Devuser:Nicolas y mettre les clés/valeurs suivantes : email=toto[AT]zaptravel.com, lastName=Dupond, firstName=Nicolas
+
+Afficher le contenu du Hash
+
+Récupérer le firstname
+
+############################################################
+
+Cas d’usage : classer par prix des voyages. Voici une liste de voyages à renseigner avec le prix en euros 
+
+ZADD DealsFranceByPrice 59 Trip:Lyon
+(integer) 1
+ZADD DealsFranceByPrice 259 Trip:Venise
+(integer) 1
+ZADD DealsFranceByPrice 130 Trip:Bordeaux
+(integer) 1
+ZADD DealsFranceByPrice 990 Trip:Paris
+(integer) 1
+
+Quel est le voyage le moins cher dans cette collection ?
+
+Quel est le voyage le plus cher dans cette collection et afficher le prix stocké
+
+############################################################
+
+Quels sont les voyages dont le prix est inférieur à 200 EUR, du voyage le plus cher au moins cher ?
+
+Comment retrouver uniquement les 10 voyages les moins chers en dessous de 200 EUR, par ordre de prix croissant ?
+
+ZRANGEBYSCORE DealsFranceByPrice 0 200 WITHSCORES LIMIT 0 10
