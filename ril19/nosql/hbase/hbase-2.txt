@@ -1,0 +1,2 @@
+> create bibliotheque, { NAME=>'auteur', VERSIONS=>2 }, { NAME=>'livre’, VERSIONS=>2 }
+> describe bibliotheque

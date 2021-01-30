@@ -1,0 +1,12 @@
+put bibliotheque, 'vhugo', 'auteur:nom', 'Hugo'
+put bibliotheque, 'vhugo', 'auteur:prenom', 'Victor'
+put bibliotheque, 'vhugo', 'livre:titre', 'La Légende des siècles'
+put bibliotheque, 'vhugo', 'livre:categ', 'Poèmes'
+put bibliotheque, 'vhugo', 'livre:date', 1855
+put bibliotheque, 'vhugo', 'livre:date', 1877
+put bibliotheque, 'vhugo', 'livre:date', 1883
+put bibliotheque, 'jverne', 'auteur:prenom', 'Jules'
+put bibliotheque, 'jverne', 'auteur:nom', 'Verne'
+put bibliotheque, 'jverne', 'livre:editeur', 'Hetzel'
+put bibliotheque, 'jverne', 'livre:titre', 'Face au drapeau'
+put bibliotheque, 'jverne', 'livre:date', 1896

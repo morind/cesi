@@ -1,0 +1,18 @@
+# Installer kubectl sur Ubuntu (pb sur Windows)
+# Commander un K8s managé (3 noeuds - B2-7)
+
+# Spark mode statique
+# Installer Spark (mode statique)
+https://github.com/morind/spark-kubernetes
+# Pour accéder a l'UI :
+kubectl port-forward service/spark-master 8088:8080
+# Installer les binaires Spark
+https://miroir.univ-lorraine.fr/apache/spark/spark-3.0.1/
+kubectl port-forward service/spark-master 8088:8080
+
+# Spark mode dynamique
+# proxy vers k8s qpi
+kubectl --kubeconfig=../kubeconfig_testk8s.yml proxy --port=6443
+# Submit
+./bin/spark-submit   --master k8s://http://localhost:6443   --deploy-mode cluster   --name spark-pi   --class org.apache.spark.examples.SparkPi   --conf spark.executor.instances=2   --conf spark.kubernetes.container.image=newfrontdocker/spark:v3.0.1-j14 https://github.com/morind/cesi/blob/master/msia4/spark/spark-examples_2.12-3.0.1.jar?raw=true 10000
+
